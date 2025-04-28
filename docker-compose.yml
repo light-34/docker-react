@@ -1,0 +1,25 @@
+services:
+  web:
+    image: frontend/react:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000/api
+    volumes:
+      - /app/node_modules
+      - .:/app
+
+  tests:
+    image: frontend/react:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000/api
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "test"]
